@@ -85,7 +85,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ url('simulasi-gaji') }}" class="nav-link">
-                    <i class="nav-icon fas fa-money-bill" style="color: #3faa3f;"></i>
+                    <i class="nav-icon fas fa-money-bill text-success"></i>
                     <p>
                         Gaji Karyawan
                     </p>

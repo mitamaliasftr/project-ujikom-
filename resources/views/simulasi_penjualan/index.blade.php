@@ -178,21 +178,21 @@
 
         let jmlHarga = jmlPcs = totalHarga = jmlDiskon = jmlTotal = 0
         arr.forEach(function (item, index) {
-            let harga
-            jmlHarga = Number(item['harga']) * Number(item['pcs'])
-            let diskon = jmlPcs >= 10 ? jmlHarga * 0.10 : 0
+            let harga = item['ukuran'] == 'S' ? 25000 : item['ukuran'] == 'M' ? 30000 : 35000
+            jmlHarga = harga * item['pcs']
+            let diskon = item['pcs'] >= 10 ? jmlHarga * 0.10 : 0
             let total = jmlHarga - diskon
             jmlPcs += item['pcs']
             jmlDiskon += diskon
-            jmlTotal += total
-            totalHarga += item['harga']
+            jmlTotal += harga
+            totalHarga += harga
 
             row += `<tr>`
             row += `<td>${item['id']}</td>`
             row += `<td>${item['tgl']}</td>`
             row += `<td>${item['warna']}</td>`
             row += `<td>${item['ukuran']}</td>`
-            row += `<td>${Number(item['harga'])}</td>`
+            row += `<td>${harga}</td>`
             row += `<td>${item['pcs']}</td>`
             row += `<td>${item['nama']}</td>`
             row += `<td>${diskon}</td>`
@@ -216,22 +216,7 @@
     $('#btn-insert').on('click', function (e) {
         e.preventDefault()
         dataPenjualan.push(insertData(dataPenjualan))
-        $('#tblTransaksiBarang tbody').html(showData(dataPenjualan))
-    })
-
-    //event ambil nilai dari select, otomatisasi harga
-
-    $('#ukuran').on('change', function(){
-        let ukuran = $('#ukuran').val();
-        let harga = 0;
-        switch (ukuran) {
-            case "S": harga = 25000; break;
-            case "M": harga = 30000; break;
-            case "L": harga = 35000; break;
-        
-            default: harga = 0; break;
-        }
-        $('#harga').val(harga);
+        $('#tblPenjualan tbody').html(showData(dataPenjualan))
     })
 
     // algoritma untuk sorting
@@ -255,7 +240,7 @@
     $('#btn-sorting').on('click', function () {
         dataPenjualan = sorting(dataPenjualan, 'id')
         localStorage.setItem('dataPenjualan', JSON.stringify(dataPenjualan))
-        $('#tblTransaksiBarang tbody').html(showData(dataPenjualan))
+        $('#tblPenjualan tbody').html(showData(dataPenjualan))
     })
 
     // algoritma untuk searching
@@ -276,7 +261,7 @@
             data.push(dataPenjualan[id])
         console.log(id)
         console.log(data)
-        $('#tblTransaksiBarang tbody').html(showData(data))
+        $('#tblPenjualan tbody').html(showData(data))
     })
 </script>
 @endpush
